@@ -9,16 +9,16 @@ exports.getProductsFromCategory = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send(err);
-    })
+    });
 };
 
 exports.postProducts = (req, res) => {
   const products = req.body;
   products.insertManyProducts(products)
     .then((results) => {
-      res.status(201).send(results)
+      res.status(201).send(results);
     })
     .catch((err) => {
       res.status(500).send(err);
-    })
+    });
 };

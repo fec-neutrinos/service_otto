@@ -26,7 +26,7 @@ const relatedProductsSchema = new mongoose.Schema({
   discountdaysleft: Number,
   producturl: String,
   isdropproduct: Boolean
-})
+});
 
 const RelatedProducts = mongoose.model('RelatedProducts', relatedProductsSchema);
 

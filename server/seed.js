@@ -5,12 +5,11 @@ const AWS = require('aws-sdk');
 AWS.config.loadFromPath('./config.json');
 const s3 = new AWS.S3({apiVersion: '2006-03-01'});
 
-
 const generateProducts = () => {
+  const urlPrefix = 'https://fec-otto.s3.amazonaws.com/image';
   let products = [];
   let shippingmethod = ['Free USA Shipping', 'Free USA Shipping and Returns', ''];
   let category = ['belts', 'knives', 'backpacks'];
-  const urlPrefix = 'https://fec-otto.s3.amazonaws.com/image'
 
   for (let i = 0; i < 100; i++) {
     let product = {
@@ -27,8 +26,8 @@ const generateProducts = () => {
       newproduct: faker.random.boolean(),
       discountdaysleft: faker.random.number({max: 15}),
       isdropproduct: faker.random.boolean()
-    }
-    product.producturl = `http://localhost:3010/buy/${product.productname.split(' ').join('-').toLowerCase()}`
+    };
+    product.producturl = `http://localhost:3010/buy/${product.productname.split(' ').join('-').toLowerCase()}`;
     products.push(product);
   }
   return products;
@@ -42,11 +41,10 @@ const generateImages = (number) => {
   return Promise.all(imagesArr);
 };
 
-
 products.dropRelatedProductsTable()
   .then((result) => {
-    console.log(`successfully removed database records ${result}`)
-    return products.insertManyProducts(generateProducts())
+    console.log('successfully records from database');
+    return products.insertManyProducts(generateProducts());
   })
   .then((result) => {
     console.log('fresh records written to db');
@@ -59,6 +57,6 @@ products.dropRelatedProductsTable()
   .catch((err) => {
     console.log('error in seeding operation', err);
     process.exit();
-  })
+  });
 
 
