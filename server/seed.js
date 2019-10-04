@@ -1,10 +1,16 @@
 const faker = require('faker');
 const products = require('./models/products');
+const download = require('download');
+const AWS = require('aws-sdk');
+AWS.config.loadFromPath('./config.json');
+const s3 = new AWS.S3({apiVersion: '2006-03-01'});
+
 
 const generateProducts = () => {
   let products = [];
   let shippingmethod = ['Free USA Shipping', 'Free USA Shipping and Returns', ''];
   let category = ['belts', 'knives', 'backpacks'];
+  const urlPrefix = 'https://fec-otto.s3.amazonaws.com/image'
 
   for (let i = 0; i < 100; i++) {
     let product = {
@@ -17,7 +23,7 @@ const generateProducts = () => {
       comments: faker.random.number(),
       productssold: faker.random.number({max: 1500}),
       shippingmethod: shippingmethod[Math.floor((Math.random() * 3))],
-      imageurl: faker.image.imageUrl(),
+      imageurl: `${urlPrefix}${i}.jpg`,
       newproduct: faker.random.boolean(),
       discountdaysleft: faker.random.number({max: 15}),
       isdropproduct: faker.random.boolean()
@@ -26,7 +32,16 @@ const generateProducts = () => {
     products.push(product);
   }
   return products;
-}
+};
+
+const generateImages = (number) => {
+  const imagesArr = [];
+  for (let i = 0; i < number; i++) {
+    imagesArr.push(download('https://picsum.photos/200', './server/images', {filename: `image${i}.jpg`}));
+  }
+  return Promise.all(imagesArr);
+};
+
 
 products.dropRelatedProductsTable()
   .then((result) => {
@@ -34,7 +49,11 @@ products.dropRelatedProductsTable()
     return products.insertManyProducts(generateProducts())
   })
   .then((result) => {
-    console.log('fresh records written to db', result);
+    console.log('fresh records written to db');
+    return generateImages(100);
+  })
+  .then((result) => {
+    console.log('completed downloading images to local disk');
     process.exit();
   })
   .catch((err) => {
