@@ -1,5 +1,5 @@
 const faker = require('faker');
-const products = require('./models/products');
+// const products = require('./models/products');
 const download = require('download');
 const AWS = require('aws-sdk');
 AWS.config.loadFromPath('./config.json');
@@ -43,22 +43,23 @@ const generateImages = (number) => {
   return Promise.all(imagesArr);
 };
 
-products.dropRelatedProductsTable()
-  .then((result) => {
-    console.log('successfully removed records from database');
-    return products.insertManyProducts(generateProducts());
-  })
-  .then((result) => {
-    console.log('fresh records written to db');
-    return generateImages(100);
-  })
-  .then((result) => {
-    console.log('completed downloading images to local disk');
-    process.exit();
-  })
-  .catch((err) => {
-    console.log('error in seeding operation', err);
-    process.exit();
-  });
+// products.dropRelatedProductsTable()
+//   .then((result) => {
+//     console.log('successfully removed records from database');
+//     return products.insertManyProducts(generateProducts());
+//   })
+//   .then((result) => {
+//     console.log('fresh records written to db');
+//     return generateImages(100);
+//   })
+//   .then((result) => {
+//     console.log('completed downloading images to local disk');
+//     process.exit();
+//   })
+//   .catch((err) => {
+//     console.log('error in seeding operation', err);
+//     process.exit();
+//   });
 
+exports.generateProducts = generateProducts;
 
