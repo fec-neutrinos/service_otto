@@ -7,9 +7,6 @@ mongoose.connect('mongodb://localhost/relatedproducts', {
 });
 
 const db = mongoose.connection;
-db.once('open', function() {
-  console.log('db connection open');
-});
 
 const relatedProductsSchema = new mongoose.Schema({
   category: String,
@@ -33,3 +30,4 @@ const relatedProductsSchema = new mongoose.Schema({
 const RelatedProducts = mongoose.model('RelatedProducts', relatedProductsSchema);
 
 exports.RelatedProducts = RelatedProducts;
+exports.db = db;
