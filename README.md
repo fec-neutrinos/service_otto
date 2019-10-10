@@ -1,13 +1,14 @@
 # Project Name
 
-> Project description
+> Clones drop.com Product Related section of the product item page.
+> Additional similar services will be deployed by other members of a development team, and will be combined by a proxy service to provide a seamless end user experience that will match the respective sections of the drop.com product page.
+> The service provides front-end (react)
 
 ## Related Projects
 
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
+  - https://github.com/fec-neutrinos/Service_Shawn
+  - https://github.com/fec-neutrinos/service_seungjin
+  - https://github.com/fec-neutrinos/Service_Albert
 
 ## Table of Contents
 
@@ -17,14 +18,19 @@
 
 ## Usage
 
-> Some usage instructions
+> Clone the repo locally.
+> Install dev and repo dependencies.
+> `npm run start` to start the server.
+> `npm run seed` to seed the database with mock data.
+> `npm run start:dev` to create bundle file to be served by express.
+> `npm run test` to verify services are working as expected.
+> http://localhost:3010 to load the client.
+
 
 ## Requirements
 
-An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
+> A MongoDB database running (ps -ef | grep mongod | grep -v grep | wc -l | tr -d ' ')
 
-- Node 6.13.0
-- etc
 
 ## Development
 
@@ -33,7 +39,6 @@ An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
 From within the root directory:
 
 ```sh
-npm install -g webpack
 npm install
 ```
 

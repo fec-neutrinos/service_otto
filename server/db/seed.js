@@ -1,8 +1,5 @@
 const products = require('../models/products');
 const download = require('download');
-// const AWS = require('aws-sdk');
-// AWS.config.loadFromPath('../../config.json');
-// const s3 = new AWS.S3({apiVersion: '2006-03-01'});
 const mockdata = require('./mockdata');
 
 const generateImages = (number) => {
@@ -20,7 +17,7 @@ products.dropRelatedProductsTable()
   })
   .then((result) => {
     console.log('fresh records written to db');
-    return generateImages(100);
+    // return generateImages(100);
   })
   .then((result) => {
     console.log('completed downloading images to local disk');

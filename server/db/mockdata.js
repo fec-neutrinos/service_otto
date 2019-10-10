@@ -24,7 +24,7 @@ const generateProducts = () => {
       rating: faker.random.number({max: 5, min: 2.5})
     };
     product.producturl = `/buy/${product.productname.split(' ').join('-').toLowerCase()}`;
-    product.discountprice = faker.random.number({max: product.price - 100, min: 1})
+    product.discountprice = faker.random.number({max: product.price - 100, min: 1});
     products.push(product);
   }
   return products;
