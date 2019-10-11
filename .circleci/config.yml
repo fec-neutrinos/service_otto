@@ -19,6 +19,7 @@ jobs: # a collection of steps
       - run:
           name: start-server
           command: npm run start
+          background: true
       - run:
           name: database-seed
           command: npm run seed
