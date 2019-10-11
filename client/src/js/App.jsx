@@ -2,10 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Main from "./components/Main.jsx"
 
-// export default function App() {
-  ReactDOM.render(<Main />, document.getElementById("app"));
+ReactDOM.render(<Main />, document.getElementById('related-products-app'));
+
+// export default function App () {
+//   return React.createElement(Main);
 // };
-
-
-
 

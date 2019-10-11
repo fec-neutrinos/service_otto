@@ -7,7 +7,7 @@ module.exports = {
   entry: path.join(srcPath, 'js', 'app.jsx'),
   output: {
     path: buildPath,
-    filename: 'bundle.js'
+    filename: 'app.js'
   },
   module: {
     rules: [
