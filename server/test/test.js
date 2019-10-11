@@ -2,6 +2,10 @@ const mockdata = require('../db/mockdata');
 const products = require('../models/products');
 const mongoose = require('mongoose');
 const fetch = require('node-fetch');
+import { shallow, mount, render } from 'enzyme';
+import React from 'react';
+import Main from '../../client/src/js/components/Main';
+
 
 test('should generate 100 fake products to be loaded in the db', () => {
   expect(mockdata.generateProducts()).toHaveLength(100);
@@ -49,5 +53,23 @@ test('should get OK response from the API', (done) => {
       expect(((result.status >= 200) && (result.status < 300))).toBe(true);
       done();
     });
+});
+
+describe('Test Client', function() {
+  it('should render app component without throwing an error', function() {
+    expect(shallow(<Main />).contains(<div className="related-products-text">Related Products</div>)).toBe(true);
+  });
+
+  // it('should be selectable by class "foo"', function() {
+  //   expect(shallow(<Foo />).is('.foo')).toBe(true);
+  // });
+
+  // it('should mount in a full DOM', function() {
+  //   expect(mount(<Foo />).find('.foo').length).toBe(1);
+  // });
+
+  // it('should render to static HTML', function() {
+  //   expect(render(<Foo />).text()).toEqual('Bar');
+  // });
 });
 
