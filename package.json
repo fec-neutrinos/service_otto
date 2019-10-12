@@ -25,6 +25,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "cors": "^2.8.5",
     "download": "^7.1.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.0",
