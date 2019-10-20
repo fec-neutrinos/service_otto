@@ -1,6 +1,27 @@
 import React from "react";
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
+import styled, { css } from "styled-components";
 import ProductList from "./ProductList.jsx"
+
+export const RelatedProductsContainer = styled.div`
+  background-color: #fff;
+  border-top: 1px solid #d8d5d2;
+  padding: 80px 70px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 50px auto;
+`;
+
+export const Title = styled.div`
+  color: #222;
+  font-family: stratos,Helvetica,Arial,Verdana,sans-serif;
+  -webkit-font-smoothing: subpixel-antialiased;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 36px;
+  line-height: 41px;
+`;
+
 
 export default class Main extends React.Component {
   constructor(props) {
@@ -24,18 +45,14 @@ export default class Main extends React.Component {
 
   render() {
     return (
-      // <div className="wdio_other_drops RelatedProducts__container__1WHDJ">
-      <div className="related-products-main-component">
-        <div className="related-products-text">Related Products</div>
-        <div className="Spacer__s4_vsize--50__2vxJO Spacer__s3_vsize--50__1Xocn Spacer__s2_vsize--50__3mh44 Spacer__s1_vsize--30__2pfE0 Spacer__s0_vsize--30__3Fy97"></div>
-        <div className="Grid__s4_pc--4__3FEWf Grid__s3_pc--4__1g56X Grid__s2_pc--3__3c8pA Grid__s1_pc--2__1eSzn Grid__s0_pc--2__2Oxwd Grid___itemSpacing--normal__2mE2K  Flex__flexContainer__3Xtgv  Flex__flexItem__7-27F">
-          <ProductList relatedProducts={this.state.relatedProducts}/>
-        </div>
-      </div>
+      <RelatedProductsContainer>
+        <Title>Related Products</Title>
+        <div className="spacer-for-main-container"></div>
+        <ProductList relatedProducts={this.state.relatedProducts}/>
+      </RelatedProductsContainer>
     )
   }
 }
 
-// ReactDOM.render(<App />, document.getElementById("app"));
 
 
