@@ -1,18 +1,38 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Product from "./Product.jsx";
+import styled, { css } from "styled-components";
+
+export const ItemContainer = styled.div`
+  display: grid
+  grid-template-columns: repeat(4, 330px);
+  grid-template-rows: repeat(2, 570.2px);
+  // grid-gap: 10px;
+  grid-auto-flow: row;
+  align-items: start;
+  justify-content: start;
+  align-content: start;
+  margin: -10px;
+`;
+
+export const GridItem = styled.div`
+  // width: 25%;
+  align-self: stretch;
+  justify-self: stretch;
+  display: grid;
+`;
 
 export default function ProductList(props) {
   return(
-    <div>
+    <ItemContainer>
       {props.relatedProducts.map((product) => {
         return (
-            <div key={product._id} className="Grid___c--1__2obI2 wdio_card wdio_drop_card wdio_drop_card--live Card__card__1RLRm Card__background--light-gray__F8hUw Grid__gridItem__2qOsq ">
+            <GridItem key={product._id}>
               <Product product={product} />
-            </div>
+            </GridItem>
         )
       })}
-    </div>
+    </ItemContainer>
   )
 };
 

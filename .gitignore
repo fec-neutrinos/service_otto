@@ -24,6 +24,7 @@ coverage
 build/
 dist/
 public/js
+public/dev
 
 # aws keys
 config.json
