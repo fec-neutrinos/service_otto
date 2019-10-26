@@ -57,7 +57,7 @@ test('should get OK response from the API', (done) => {
 
 describe('Test Client', function() {
   it('should render app component without throwing an error', function() {
-    expect(shallow(<Main />).contains(<div className="related-products-text">Related Products</div>)).toBe(true);
+    expect(shallow(<Main />).contains(<div className="spacer-for-main-container"></div>)).toBe(true);
   });
 
   // it('should be selectable by class "foo"', function() {

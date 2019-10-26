@@ -46,7 +46,7 @@ export default class Main extends React.Component {
   render() {
     return (
       <RelatedProductsContainer>
-        <Title>Related Products</Title>
+        <Title className="related-products-text">Related Products</Title>
         <div className="spacer-for-main-container"></div>
         <ProductList relatedProducts={this.state.relatedProducts}/>
       </RelatedProductsContainer>
