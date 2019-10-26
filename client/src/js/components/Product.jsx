@@ -55,11 +55,20 @@ export const ProductName = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   justify-self: start;
-
-  // grid-template-rows: repeat(5, 1fr);
+  color: #222;
+  font-family: gordita,Helvetica,Arial,Verdana,sans-serif;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  white-space: normal;
+  font-size: 18px;
+  line-height: 22px;
+  min-height: calc(45px);
 `;
 
-export const Pricing = styled.div`
+export const Pricing = styled(ProductName)`
   // display: grid;
   // grid-template-columns: 1fr;
   // grid-template-rows: repeat(5, 1fr);
