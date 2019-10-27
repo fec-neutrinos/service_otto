@@ -214,7 +214,7 @@ export default function Product(props) {
             onClose={handlePopoverClose}
             disableRestoreFocus
           >
-            <Typography>Save to Profile</Typography>
+            <Typography style={{ font: 'inherit'}}>Save to Profile</Typography>
           </Popover>
         </DropFavorite>
         <ProductPicture>
