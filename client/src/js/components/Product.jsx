@@ -1,5 +1,22 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
+import LocalShippingOutlinedIcon from '@material-ui/icons/LocalShippingOutlined';
+import StarBorderRoundedIcon from '@material-ui/icons/StarBorderRounded';
+import StarRoundedIcon from '@material-ui/icons/StarRounded';
+import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
+import Popover from '@material-ui/core/Popover';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  popover: {
+    pointerEvents: 'none',
+  },
+  paper: {
+    padding: theme.spacing(1),
+  },
+}));
 
 export const AContainer = styled.a`
   background-color: transparent;
@@ -21,6 +38,7 @@ export const ImageContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 5fr;
+  margin: 10px;
   grid-template-areas:
     "dropflair . dropfavorite"
     "productpicture productpicture productpicture";
@@ -30,12 +48,16 @@ export const DropFlair = styled.div`
   grid-area: dropflair;
   align-self: start;
   justify-self: start;
+  // padding: 10px;
 `;
 
 export const DropFavorite = styled.div`
   grid-area: dropfavorite;
   align-self: start;
   justify-self: end;
+  &:hover {
+    color: #fdcf41;
+  }
 `;
 
 export const ProductPicture = styled.div`
@@ -47,7 +69,7 @@ export const ProductPicture = styled.div`
 export const DropCardBodyContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(5, .20fr);
+  grid-template-rows: 1fr 1fr 1.75fr;
   padding: 20px 25px;
 `;
 
@@ -63,26 +85,46 @@ export const ProductName = styled.div`
   -webkit-box-orient: vertical;
   display: -webkit-box;
   white-space: normal;
-  font-size: 18px;
+  font-size: 19px;
   line-height: 22px;
   min-height: calc(45px);
+  font-weight: 500;
 `;
 
 export const Pricing = styled(ProductName)`
-  // display: grid;
-  // grid-template-columns: 1fr;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr repeat(3, 4fr);
+  align-items: center;
+  font-size: 18px;
   // grid-template-rows: repeat(5, 1fr);
 `;
 
 export const CardFooter = styled.div`
   display: grid;
-  // grid-template-columns: 1fr;
-  // grid-template-rows: repeat(5, 1fr);
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  color:rgb(34, 34, 34);
+  font-family:gordita, Helvetica, Arial, Verdana, sans-serif;
+  font-size:11px;
+  font-weight:325;
+  height:auto;
+  // line-height:18px;
+  text-size-adjust:100%;
+  white-space:nowrap;
+  width:auto;
+  -webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+`;
+
+export const Stars = styled.div`
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(5, .1fr) 2fr;
 `;
 
 export const Comments = styled.div`
   display: grid;
-  grid-template-columns: .3fr 1fr 1fr 1fr;
+  grid-template-columns: .3fr 1.3fr 1fr 1fr;
 `;
 
 export const ProductsSold = styled.div`
@@ -91,8 +133,40 @@ export const ProductsSold = styled.div`
   // grid-template-rows: repeat(5, 1fr);
 `;
 
-
 export default function Product(props) {
+  let price;
+  let discountDaysLeft;
+  let stars = [];
+  const filledStars = <StarRoundedIcon style={{ fontSize: 'medium' }}></StarRoundedIcon>;
+  const emptyStars = <StarBorderRoundedIcon style={{ fontSize: 'medium' }}></StarBorderRoundedIcon>;
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handlePopoverOpen = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  for (let i = 0; i < props.product.rating; i++) {
+    stars.push(filledStars);
+  }
+  for (let i = 0; i < 5 - props.product.rating; i++) {
+    stars.push(emptyStars);
+  }
+  if (props.product.discounted) {
+    price = <div>${props.product.discountprice}</div>;
+    discountDaysLeft = <div style={{ justifySelf: 'end' }}>{props.product.discountdaysleft} days left</div>
+  } else {
+    price = <div>${props.product.price}</div>;
+    discountDaysLeft = <div></div>
+  };
+
+
+
   // return (<div className="product">
   //   <p className="productname">{props.product.productname}</p>
   //   <p className="discounted">{props.product.discounted}</p>
@@ -110,63 +184,65 @@ export default function Product(props) {
     <AContainer href={props.product.producturl} style={{position: 'relative', border: 'none'}}>
       <ImageContainer>
         {props.product.isdropproduct && <DropFlair>
-          <i className="logo" style={{lineHeight: 1, width: 'auto', fontSize: '12px'}}></i>
-          <div className="DropFlair__text__ivBkr Text__text__PazWx Text__type--callout__2aZn6 ">D</div>
+          {/* <i className="logo" style={{lineHeight: 1, width: 'auto', fontSize: '12px'}}></i> */}
+          <div>D</div>
         </DropFlair>}
         <DropFavorite>
-          <div style={{position: 'relative', display: 'inline-block'}}>
-            <div style={{cursor: 'pointer'}}>
-              <i contentid="46477" contenttype="drop-discussion" dropid="87615" tooltipposition="bottom" tooltiparrowposition="right" favorites="Map { &quot;name&quot;: &quot;Favorites&quot;, &quot;content&quot;: List [] }" tooltipcontent="Save to Profile" className="material-icons material-icon--bookmark_border Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: 'auto', fontSize: '12px', pointerEvents: 'none'}}>F</i>
-            </div>
-          </div>
+          <BookmarkBorderOutlinedIcon
+            aria-owns={open ? 'mouse-over-popover' : undefined}
+            aria-haspopup="true"
+            onMouseEnter={handlePopoverOpen}
+            onMouseLeave={handlePopoverClose}
+          >
+          </BookmarkBorderOutlinedIcon>
+          <Popover
+            id="mouse-over-popover"
+            className={classes.popover}
+            classes={{
+              paper: classes.paper,
+            }}
+            open={open}
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            onClose={handlePopoverClose}
+            disableRestoreFocus
+          >
+            <Typography style={{ font: 'inherit'}}>Save to Profile</Typography>
+          </Popover>
         </DropFavorite>
-        <ProductPicture style={{paddingBottom: '5%'}}>
+        <ProductPicture>
           <div>
             <picture>
-              <img alt="" src={props.product.imageurl} className="responsive"/>
+              <img alt="" src={props.product.imageurl}/>
             </picture>
           </div>
         </ProductPicture>
       </ImageContainer>
       <DropCardBodyContainer>
-        <ProductName>{props.product.productname}</ProductName>
+        <ProductName>Massdrop x {props.product.productname}</ProductName>
         <Pricing>
-            <div className="wdio__price Text__text__PazWx Text__type--price__1mumP ">${props.product.price}</div>
-        </Pricing>
-        <div className="flexItem wd_flexGrow--0 d_flexGrow--0 wt_flexGrow--0 nt_flexGrow--0 p_flexGrow--0 flexContainer wd_alignItems--flexStart d_alignItems--flexStart wt_alignItems--flexStart nt_alignItems--flexStart p_alignItems--flexStart wd_flexDirection--column d_flexDirection--column wt_flexDirection--column nt_flexDirection--column p_flexDirection--column DropCard__breadcrumbs_container__3l3Eb">
-          <div className="RatingBar__rating_star__JtSB5 " style={{padding: '0px 1px', lineHeight: '12px'}}>
-            <i className="material-icons material-icon--star_border Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: 'auto', fontSize: '12px', display: 'block', visibility: 'visible'}}></i>
-            <i className="material-icons material-icon--star Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: '100%', fontSize: '12px', position: 'absolute', overflow: 'hidden', top: '0px', left: '1px'}}></i>
-          </div>
-          <div className="RatingBar__rating_star__JtSB5 " style={{padding: '0px 1px', lineHeight: '12px'}}>
-            <i className="material-icons material-icon--star_border Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: 'auto', fontSize: '12px', display: 'block', visibility: 'visible'}}></i>
-            <i className="material-icons material-icon--star Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: 'auto', fontSize: '12px', display: 'block', visibility: 'visible'}}></i>
-          </div>
-          <div className="RatingBar__rating_star__JtSB5 " style={{padding: '0px 1px', lineHeight: '12px'}}>
-            <i className="material-icons material-icon--star_border Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: 'auto', fontSize: '12px', display: 'block', visibility: 'visible'}}></i>
-            <i className="material-icons material-icon--star Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: 'auto', fontSize: '12px', display: 'block', visibility: 'visible'}}></i>
-          </div>
-          <div className="RatingBar__rating_star__JtSB5 " style={{padding: '0px 1px', lineHeight: '12px'}}>
-            <i className="material-icons material-icon--star_border Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: 'auto', fontSize: '12px', display: 'block', visibility: 'visible'}}></i>
-            <i className="material-icons material-icon--star Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: 'auto', fontSize: '12px', display: 'block', visibility: 'visible'}}></i>
-          </div>
-          <div className="RatingBar__rating_star__JtSB5 " style={{padding: '0px 1px', lineHeight: '12px'}}>
-            <i className="material-icons material-icon--star_border Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: 'auto', fontSize: '12px', display: 'block', visibility: 'visible'}}></i>
-            <i className="material-icons material-icon--star Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: 'auto', fontSize: '12px', display: 'block', visibility: 'visible'}}></i>
-          </div>
-          <div className="Spacer___hsize--5__3rShg"></div>
-          <div className="Text__text__PazWx Text__type--footnote__3k2Zo ">{props.product.rating}</div>
-        </div>
-        <div>{props.product.shippingmethod}</div>
-        <CardFooter>
-          <Comments>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" className="Icon__color--black__lGnv2 " style={{display: "inline", lineHeight: 1, width: 'auto', fontSize: '18px', transform: 'scaleX(-1)', pointerEvents: 'none', marginTop: '2px'}}>
-              <path fill="none" d="M0 0h24v24H0V0z"></path>
-              <path d="M20 17.17L18.83 16H4V4h16v13.17zM20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2z"></path>
-            </svg>
-            <span className="Text__text__PazWx Text__type--footnote__3k2Zo Text__color--black__1GptT " style={{textTransform: 'lowercase'}}> {props.product.comments} </span>
+            {price}
             <div></div>
-            <div className="Text__text__PazWx Text__type--footnote__3k2Zo " style={{textTransform: 'lowercase'}}> {props.product.productssold} sold</div>
+            {props.product.discounted && <div style={{color: '#9f9e9e', textDecoration:'line-through'}}>${props.product.price}</div>}
+        </Pricing>
+        <CardFooter>
+          <Stars>
+            {stars}
+            <div style={{padding: '2px 0px 0px 0px'}}> {props.product.reviews}</div>
+          </Stars>
+          <div>{props.product.shippingmethod}</div>
+          <Comments>
+            <ChatBubbleOutlineOutlinedIcon style={{ fontSize: 'large' }}></ChatBubbleOutlineOutlinedIcon>
+            <div>{props.product.comments}</div>
+            {discountDaysLeft}
+            <div style={{ justifySelf: 'end' }}>{props.product.productssold} sold</div>
           </Comments>
         </CardFooter>
       </DropCardBodyContainer>
