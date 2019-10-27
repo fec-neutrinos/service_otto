@@ -1,5 +1,11 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
+import LocalShippingOutlinedIcon from '@material-ui/icons/LocalShippingOutlined';
+import StarBorderRoundedIcon from '@material-ui/icons/StarBorderRounded';
+import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
+import StarRoundedIcon from '@material-ui/icons/StarRounded';
+import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 
 export const AContainer = styled.a`
   background-color: transparent;
@@ -37,6 +43,9 @@ export const DropFavorite = styled.div`
   grid-area: dropfavorite;
   align-self: start;
   justify-self: end;
+  &:hover {
+    color: #fdcf41;
+  }
 `;
 
 export const ProductPicture = styled.div`
@@ -92,6 +101,13 @@ export const CardFooter = styled.div`
   -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
 `;
 
+export const Stars = styled.div`
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(5, .1fr) 2fr;
+`;
+
+
 export const Comments = styled.div`
   display: grid;
   grid-template-columns: .3fr 1fr 1fr 1fr;
@@ -107,6 +123,15 @@ export const ProductsSold = styled.div`
 export default function Product(props) {
   let price;
   let discountDaysLeft;
+  const filledStars = <StarRoundedIcon style={{ fontSize: 'medium' }}></StarRoundedIcon>;
+  const emptyStars = <StarBorderRoundedIcon style={{ fontSize: 'medium' }}></StarBorderRoundedIcon>;
+  let stars = [];
+  for (let i = 0; i < props.product.rating; i++) {
+    stars.push(filledStars);
+  }
+  for (let i = 0; i < 5 - props.product.rating; i++) {
+    stars.push(emptyStars);
+  }
   if (props.product.discounted) {
     price = <div>${props.product.discountprice}</div>;
     discountDaysLeft = <div>{props.product.discountdaysleft} days left</div>
@@ -114,6 +139,8 @@ export default function Product(props) {
     price = <div>${props.product.price}</div>;
     discountDaysLeft = <div></div>
   };
+
+
 
   // return (<div className="product">
   //   <p className="productname">{props.product.productname}</p>
@@ -132,20 +159,16 @@ export default function Product(props) {
     <AContainer href={props.product.producturl} style={{position: 'relative', border: 'none'}}>
       <ImageContainer>
         {props.product.isdropproduct && <DropFlair>
-          <i className="logo" style={{lineHeight: 1, width: 'auto', fontSize: '12px'}}></i>
-          <div className="DropFlair__text__ivBkr Text__text__PazWx Text__type--callout__2aZn6 ">D</div>
+          {/* <i className="logo" style={{lineHeight: 1, width: 'auto', fontSize: '12px'}}></i> */}
+          <div>D</div>
         </DropFlair>}
         <DropFavorite>
-          <div style={{position: 'relative', display: 'inline-block'}}>
-            <div style={{cursor: 'pointer'}}>
-              <i contentid="46477" contenttype="drop-discussion" dropid="87615" tooltipposition="bottom" tooltiparrowposition="right" favorites="Map { &quot;name&quot;: &quot;Favorites&quot;, &quot;content&quot;: List [] }" tooltipcontent="Save to Profile" className="material-icons material-icon--bookmark_border Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: 'auto', fontSize: '12px', pointerEvents: 'none'}}>F</i>
-            </div>
-          </div>
+          <BookmarkBorderOutlinedIcon></BookmarkBorderOutlinedIcon>
         </DropFavorite>
         <ProductPicture>
           <div>
             <picture>
-              <img alt="" src={props.product.imageurl} className="responsive"/>
+              <img alt="" src={props.product.imageurl}/>
             </picture>
           </div>
         </ProductPicture>
@@ -158,36 +181,12 @@ export default function Product(props) {
             {props.product.discounted && <div style={{color: '#9f9e9e', textDecoration:'line-through'}}>${props.product.price}</div>}
         </Pricing>
         <CardFooter>
-          <div className="flexItem wd_flexGrow--0 d_flexGrow--0 wt_flexGrow--0 nt_flexGrow--0 p_flexGrow--0 flexContainer wd_alignItems--flexStart d_alignItems--flexStart wt_alignItems--flexStart nt_alignItems--flexStart p_alignItems--flexStart wd_flexDirection--column d_flexDirection--column wt_flexDirection--column nt_flexDirection--column p_flexDirection--column DropCard__breadcrumbs_container__3l3Eb">
-            <div className="RatingBar__rating_star__JtSB5 " style={{padding: '0px 1px', lineHeight: '12px'}}>
-              <i className="material-icons material-icon--star_border Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: 'auto', fontSize: '12px', display: 'block', visibility: 'visible'}}></i>
-              <i className="material-icons material-icon--star Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: '100%', fontSize: '12px', position: 'absolute', overflow: 'hidden', top: '0px', left: '1px'}}></i>
-            </div>
-            <div className="RatingBar__rating_star__JtSB5 " style={{padding: '0px 1px', lineHeight: '12px'}}>
-              <i className="material-icons material-icon--star_border Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: 'auto', fontSize: '12px', display: 'block', visibility: 'visible'}}></i>
-              <i className="material-icons material-icon--star Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: 'auto', fontSize: '12px', display: 'block', visibility: 'visible'}}></i>
-            </div>
-            <div className="RatingBar__rating_star__JtSB5 " style={{padding: '0px 1px', lineHeight: '12px'}}>
-              <i className="material-icons material-icon--star_border Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: 'auto', fontSize: '12px', display: 'block', visibility: 'visible'}}></i>
-              <i className="material-icons material-icon--star Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: 'auto', fontSize: '12px', display: 'block', visibility: 'visible'}}></i>
-            </div>
-            <div className="RatingBar__rating_star__JtSB5 " style={{padding: '0px 1px', lineHeight: '12px'}}>
-              <i className="material-icons material-icon--star_border Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: 'auto', fontSize: '12px', display: 'block', visibility: 'visible'}}></i>
-              <i className="material-icons material-icon--star Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: 'auto', fontSize: '12px', display: 'block', visibility: 'visible'}}></i>
-            </div>
-            <div className="RatingBar__rating_star__JtSB5 " style={{padding: '0px 1px', lineHeight: '12px'}}>
-              <i className="material-icons material-icon--star_border Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: 'auto', fontSize: '12px', display: 'block', visibility: 'visible'}}></i>
-              <i className="material-icons material-icon--star Icon__icon__1AvBb Icon__color--black__lGnv2 " style={{lineHeight: 1, width: 'auto', fontSize: '12px', display: 'block', visibility: 'visible'}}></i>
-            </div>
-            <div className="Spacer___hsize--5__3rShg"></div>
-            <div className="Text__text__PazWx Text__type--footnote__3k2Zo ">{props.product.rating}</div>
-          </div>
-          <div>{props.product.shippingmethod}</div>
+          <Stars>
+            {stars}
+            <div style={{padding: '2px 0px 0px 0px'}}> {props.product.reviews}</div>
+          </Stars>
           <Comments>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18">
-              <path fill="none" d="M0 0h24v24H0V0z"></path>
-              <path d="M20 17.17L18.83 16H4V4h16v13.17zM20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2z"></path>
-            </svg>
+            <ChatBubbleOutlineOutlinedIcon style={{ fontSize: 'large' }}></ChatBubbleOutlineOutlinedIcon>
             <div>{props.product.comments}</div>
             {discountDaysLeft}
             <div>{props.product.productssold} sold</div>
