@@ -3,9 +3,20 @@ import styled, { css } from "styled-components";
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import LocalShippingOutlinedIcon from '@material-ui/icons/LocalShippingOutlined';
 import StarBorderRoundedIcon from '@material-ui/icons/StarBorderRounded';
-import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
 import StarRoundedIcon from '@material-ui/icons/StarRounded';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
+import Popover from '@material-ui/core/Popover';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  popover: {
+    pointerEvents: 'none',
+  },
+  paper: {
+    padding: theme.spacing(1),
+  },
+}));
 
 export const AContainer = styled.a`
   background-color: transparent;
@@ -111,7 +122,6 @@ export const Stars = styled.div`
   grid-template-columns: repeat(5, .1fr) 2fr;
 `;
 
-
 export const Comments = styled.div`
   display: grid;
   grid-template-columns: .3fr 1.3fr 1fr 1fr;
@@ -123,13 +133,24 @@ export const ProductsSold = styled.div`
   // grid-template-rows: repeat(5, 1fr);
 `;
 
-
 export default function Product(props) {
   let price;
   let discountDaysLeft;
+  let stars = [];
   const filledStars = <StarRoundedIcon style={{ fontSize: 'medium' }}></StarRoundedIcon>;
   const emptyStars = <StarBorderRoundedIcon style={{ fontSize: 'medium' }}></StarBorderRoundedIcon>;
-  let stars = [];
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handlePopoverOpen = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
   for (let i = 0; i < props.product.rating; i++) {
     stars.push(filledStars);
   }
@@ -167,7 +188,34 @@ export default function Product(props) {
           <div>D</div>
         </DropFlair>}
         <DropFavorite>
-          <BookmarkBorderOutlinedIcon></BookmarkBorderOutlinedIcon>
+          <BookmarkBorderOutlinedIcon
+            aria-owns={open ? 'mouse-over-popover' : undefined}
+            aria-haspopup="true"
+            onMouseEnter={handlePopoverOpen}
+            onMouseLeave={handlePopoverClose}
+          >
+          </BookmarkBorderOutlinedIcon>
+          <Popover
+            id="mouse-over-popover"
+            className={classes.popover}
+            classes={{
+              paper: classes.paper,
+            }}
+            open={open}
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            onClose={handlePopoverClose}
+            disableRestoreFocus
+          >
+            <Typography>Save to Profile</Typography>
+          </Popover>
         </DropFavorite>
         <ProductPicture>
           <div>
