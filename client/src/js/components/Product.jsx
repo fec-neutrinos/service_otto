@@ -37,6 +37,7 @@ export const DropFlair = styled.div`
   grid-area: dropflair;
   align-self: start;
   justify-self: start;
+  // padding: 10px;
 `;
 
 export const DropFavorite = styled.div`
@@ -57,7 +58,7 @@ export const ProductPicture = styled.div`
 export const DropCardBodyContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  // grid-template-rows: 1fr 1fr 2fr;
+  grid-template-rows: 1fr 1fr 1.75fr;
   padding: 20px 25px;
 `;
 
@@ -73,14 +74,17 @@ export const ProductName = styled.div`
   -webkit-box-orient: vertical;
   display: -webkit-box;
   white-space: normal;
-  font-size: 18px;
+  font-size: 19px;
   line-height: 22px;
   min-height: calc(45px);
+  font-weight: 500;
 `;
 
 export const Pricing = styled(ProductName)`
   display: grid;
-  grid-template-columns: 1fr 0.75fr 1fr repeat(3, 4fr);
+  grid-template-columns: 1fr 1.5fr 1fr repeat(3, 4fr);
+  align-items: center;
+  font-size: 18px;
   // grid-template-rows: repeat(5, 1fr);
 `;
 
@@ -90,8 +94,8 @@ export const CardFooter = styled.div`
   grid-template-rows: repeat(3, 1fr);
   color:rgb(34, 34, 34);
   font-family:gordita, Helvetica, Arial, Verdana, sans-serif;
-  font-size:12px;
-  font-weight:400;
+  font-size:11px;
+  font-weight:325;
   height:auto;
   // line-height:18px;
   text-size-adjust:100%;
@@ -110,7 +114,7 @@ export const Stars = styled.div`
 
 export const Comments = styled.div`
   display: grid;
-  grid-template-columns: .3fr 1fr 1fr 1fr;
+  grid-template-columns: .3fr 1.3fr 1fr 1fr;
 `;
 
 export const ProductsSold = styled.div`
@@ -134,7 +138,7 @@ export default function Product(props) {
   }
   if (props.product.discounted) {
     price = <div>${props.product.discountprice}</div>;
-    discountDaysLeft = <div>{props.product.discountdaysleft} days left</div>
+    discountDaysLeft = <div style={{ justifySelf: 'end' }}>{props.product.discountdaysleft} days left</div>
   } else {
     price = <div>${props.product.price}</div>;
     discountDaysLeft = <div></div>
@@ -185,11 +189,12 @@ export default function Product(props) {
             {stars}
             <div style={{padding: '2px 0px 0px 0px'}}> {props.product.reviews}</div>
           </Stars>
+          <div>{props.product.shippingmethod}</div>
           <Comments>
             <ChatBubbleOutlineOutlinedIcon style={{ fontSize: 'large' }}></ChatBubbleOutlineOutlinedIcon>
             <div>{props.product.comments}</div>
             {discountDaysLeft}
-            <div>{props.product.productssold} sold</div>
+            <div style={{ justifySelf: 'end' }}>{props.product.productssold} sold</div>
           </Comments>
         </CardFooter>
       </DropCardBodyContainer>
