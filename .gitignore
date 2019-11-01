@@ -23,8 +23,9 @@ coverage
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 build/
 dist/
-public/js
+public/app.js
 public/dev
+dbseed/
 
 # aws keys
 config.json

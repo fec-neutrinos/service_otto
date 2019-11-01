@@ -1,0 +1,22 @@
+version: "2"
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    ports:
+      - "27017:27017"
+
+  app:
+    container_name: app
+    restart: always
+    build: .
+    ports:
+      - "3010:3010"
+    links:
+      - mongodb
+
+  seed:
+    container_name: seed
+    build: ./dbseed
+    links:
+      - mongodb
