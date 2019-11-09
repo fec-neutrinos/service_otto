@@ -32,7 +32,8 @@ export default class Main extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://alb2-4101942.ca-central-1.elb.amazonaws.com:3010/category/belts')
+    // fetch('http://alb2-4101942.ca-central-1.elb.amazonaws.com:3010/category/belts')
+    fetch('http://localhost:3010/category/belts')
       .then((result) => {
         return result.json();
       })
