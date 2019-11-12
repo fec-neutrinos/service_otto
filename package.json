@@ -37,7 +37,7 @@
     "express": "^4.17.1",
     "faker": "^4.1.0",
     "jest": "^24.9.0",
-    "mongoose": "^5.7.1",
+    "mongoose": "^5.7.5",
     "morgan": "^1.9.1",
     "node-fetch": "^2.6.0",
     "nodemon": "^1.19.3",
