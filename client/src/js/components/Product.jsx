@@ -48,6 +48,7 @@ export const DropFlair = styled.div`
   grid-area: dropflair;
   align-self: start;
   justify-self: start;
+  background-color: white;
   // padding: 10px;
 `;
 
@@ -124,14 +125,25 @@ export const Stars = styled.div`
 
 export const Comments = styled.div`
   display: grid;
-  grid-template-columns: .3fr 1.3fr 1fr 1fr;
+  grid-template-columns: 1.6fr 1fr 1fr;
 `;
+
+export const ChatBubble = styled.div`
+  display: grid;
+  grid-template-columns: 0.3fr 1.3fr;
+  &:hover {
+    color: #fdcf41;
+  }
+`;
+
 
 export const ProductsSold = styled.div`
   display: grid;
   // grid-template-columns: 1fr;
   // grid-template-rows: repeat(5, 1fr);
 `;
+
+
 
 export default function Product(props) {
   let price;
@@ -165,26 +177,10 @@ export default function Product(props) {
     discountDaysLeft = <div></div>
   };
 
-
-
-  // return (<div className="product">
-  //   <p className="productname">{props.product.productname}</p>
-  //   <p className="discounted">{props.product.discounted}</p>
-  //   <p className="price">{props.product.price}</p>
-  //   <p className="discountedprice">{props.product.discountprice}</p>
-  //   <p className="comments">{props.product.comments}</p>
-  //   <p className="shippingmethod">{props.product.shippingmethod}</p>
-  //   <p className="imageurl">{props.product.imageurl}</p>
-  //   <p className="newproduct">{props.product.newproduct}</p>
-  //   <p className="discountdaysleft">{props.product.discountdaysleft}</p>
-  //   <p className="isdropproduct">{props.product.isdropproduct}</p>
-  //   <p className="producturl">{props.product.producturl}</p>
-  // </div>)
   return (
-    <AContainer href={props.product.producturl} style={{position: 'relative', border: 'none'}}>
+    <AContainer href={props.product.producturl} >
       <ImageContainer>
         {props.product.isdropproduct && <DropFlair>
-          {/* <i className="logo" style={{lineHeight: 1, width: 'auto', fontSize: '12px'}}></i> */}
           <div>D</div>
         </DropFlair>}
         <DropFavorite>
@@ -205,7 +201,7 @@ export default function Product(props) {
             anchorEl={anchorEl}
             anchorOrigin={{
               vertical: 'bottom',
-              horizontal: 'left',
+              horizontal: 'right',
             }}
             transformOrigin={{
               vertical: 'top',
@@ -239,8 +235,10 @@ export default function Product(props) {
           </Stars>
           <div>{props.product.shippingmethod}</div>
           <Comments>
-            <ChatBubbleOutlineOutlinedIcon style={{ fontSize: 'large' }}></ChatBubbleOutlineOutlinedIcon>
-            <div>{props.product.comments}</div>
+            <ChatBubble>
+              <ChatBubbleOutlineOutlinedIcon style={{ fontSize: 'large' }}></ChatBubbleOutlineOutlinedIcon>
+              <div>{props.product.comments}</div>
+            </ChatBubble>
             {discountDaysLeft}
             <div style={{ justifySelf: 'end' }}>{props.product.productssold} sold</div>
           </Comments>
