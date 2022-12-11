@@ -34,7 +34,7 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.0",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor.git",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "faker": "^4.1.0",
     "jest": "^24.9.0",
     "mongoose": "^5.7.1",
